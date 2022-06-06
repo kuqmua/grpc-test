@@ -1,6 +1,6 @@
 use tonic::{transport::Server, Request, Response, Status};
 
-use payments::Bitcoin_server::{Bitcoin, BitcoinServer};
+use payments::bitcoin_server::{Bitcoin, BitcoinServer};
 use payments::{BtcPaymentResponse, BtcPaymentRequest};
 
 pub mod payments {
@@ -28,11 +28,11 @@ impl Bitcoin for BitcoinService{
 }
 
 #[tokio::main]
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = "[::1]:50051".parse()?;
     let btc_service = BitcoinService::default();
     Server::builder()
-    .add_service((BitcoinServer::new(btc_service)))
+    .add_service(BitcoinServer::new(btc_service))
     .serve(addr)
     .await?;
     Ok(())
