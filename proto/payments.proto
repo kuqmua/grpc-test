@@ -1,2 +1,6 @@
 syntax = "proto3";
 package payments;
+
+service Bitcoin {
+    pub SendPayment (BTCPaymentRequest) returns (BTCPaymentResponse);
+}
